@@ -29,7 +29,7 @@ it will call the login() function. Otherwise, it will only display the login but
 function login_check() {
   // get the code if it exists
   let url = window.location.href;
-  let access_token = url.substring(36, 216);
+  let access_token = url.substring(60, 240);
   console.log(access_token);
   // if it doesn't exist, only show the login button.
   if (access_token == "") {
@@ -76,7 +76,7 @@ spotify_login() redirects the user to the spotify login portal.
 
 function spotify_login() {
   window.location =
-    "https://accounts.spotify.com/en/authorize?client_id=d814e2c0db1c41ec848479f3876900c4&redirect_uri=http:%2F%2Flocalhost:8000%2F&response_type=token&scope=playlist-modify-public";
+    "https://accounts.spotify.com/en/authorize?client_id=d814e2c0db1c41ec848479f3876900c4&redirect_uri=https%3A%2F%2Fmedwardson.github.io%2FSpotifySentences%2F&response_type=token&scope=playlist-modify-public";
 }
 
 /*
