@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SpotifySentence</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="index.js"></script>
+  </head>
+  <body onload="login_check()">
+    <div id="header">
+      <div id="title">SpotifySentences</div>
+      <h2 id="username"></h2>
+    </div>
+    <div id="main">
+      <button id="login" class="btn btn-dark" onclick="spotify_login()">
+        Login
+      </button>
+      <p href="" id="playlist-url"></p>
+      <button id="reset" onclick="login_check()" class="btn btn-dark">
+        Make another Playlist
+      </button>
+      <div id="input">
+        <textarea
+          class="input-group-text"
+          type="text"
+          id="sentence"
+          placeholder="Sentence to convert...."
+        ></textarea>
+        <div id="submitBox">
+          <input
+            class="input-group-text"
+            type="text"
+            id="playlist-title"
+            placeholder="Playlist Title"
+          /><br />
+          <button onclick="main()" class="btn btn-dark">Submit</button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
