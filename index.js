@@ -4,6 +4,9 @@ String -> List of String
 
 */
 
+let ENV__GHPAGES = encodeURI("https://medwardson.github.io/SpotifySentences/");
+let ENV__LOCALHOST = encodeURI("http://localhost:8000/");
+
 function get_data(sentence) {
   return sentence
     .split(" ")
@@ -27,12 +30,12 @@ login_check() is a function called onload to see if the user has logged into spo
 it will call the login() function. Otherwise, it will only display the login button.
 */
 function login_check() {
+  const query = new URLSearchParams(window.location.hash.substr(1));
+  let access_token = query.get("access_token");
+  // ?product=shirt&color=blue&newuser&size=m
   // get the code if it exists
-  let url = window.location.href;
-  let access_token = url.substring(60, 240);
-  console.log(access_token);
   // if it doesn't exist, only show the login button.
-  if (access_token == "") {
+  if (access_token == null) {
     document.getElementById("login").style.display = "block";
     document.getElementById("reset").style.display = "none";
     document.getElementById("username").style.display = "none";
@@ -75,8 +78,7 @@ spotify_login() redirects the user to the spotify login portal.
 */
 
 function spotify_login() {
-  window.location =
-    "https://accounts.spotify.com/en/authorize?client_id=d814e2c0db1c41ec848479f3876900c4&redirect_uri=https%3A%2F%2Fmedwardson.github.io%2FSpotifySentences%2F&response_type=token&scope=playlist-modify-public";
+  window.location = `https://accounts.spotify.com/en/authorize?client_id=d814e2c0db1c41ec848479f3876900c4&redirect_uri=${ENV__GHPAGES}&response_type=token&scope=playlist-modify-public`;
 }
 
 /*
