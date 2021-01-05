@@ -4,8 +4,12 @@ String -> List of String
 
 */
 
+// ENVIRONMENT OPTIONS
 let ENV__GHPAGES = encodeURI("https://medwardson.github.io/SpotifySentences/");
 let ENV__LOCALHOST = encodeURI("http://localhost:8000/");
+
+// CURRENT ENV (changeable)
+let ENV = ENV__LOCALHOST;
 
 function get_data(sentence) {
   return sentence
@@ -78,7 +82,7 @@ spotify_login() redirects the user to the spotify login portal.
 */
 
 function spotify_login() {
-  window.location = `https://accounts.spotify.com/en/authorize?client_id=d814e2c0db1c41ec848479f3876900c4&redirect_uri=${ENV__GHPAGES}&response_type=token&scope=playlist-modify-public`;
+  window.location = `https://accounts.spotify.com/en/authorize?client_id=d814e2c0db1c41ec848479f3876900c4&redirect_uri=${ENV}&response_type=token&scope=playlist-modify-public`;
 }
 
 /*
