@@ -4,7 +4,7 @@ String -> List of String
 
 */
 
-let ENV__GHPAGES = encodeURI("https://medwardson.github.io/SpotifySentences/");
+let ENV__GHPAGES = encodeURI("https://medwardson.github.io/spotifysentences/");
 let ENV__LOCALHOST = encodeURI("http://localhost:8000/");
 
 function get_data(sentence) {
