@@ -40,6 +40,9 @@ function login_check() {
   // get the code if it exists
   // if it doesn't exist, only show the login button.
   if (access_token == null) {
+    document.getElementById("info").style.display = "block";
+    document.getElementById("info").innerHTML =
+      "Welcome to SpotifySentences, please login to continue.";
     document.getElementById("login").style.display = "block";
     document.getElementById("reset").style.display = "none";
     document.getElementById("username").style.display = "none";
@@ -66,6 +69,9 @@ function login(access_token) {
     .then((res) => res.json())
     .then((data) => {
       window.localStorage.setItem("user_id", data.id);
+      document.getElementById("info").style.display = "block";
+      document.getElementById("info").innerHTML =
+        "SpotifySentences will convert the sentence you enter below into a playlist who's song names spell out the sentence. Please fill out the information below.";
       document.getElementById("reset").style.display = "none";
       document.getElementById("playlist-url").style.display = "none";
       document.getElementById("login").style.display = "none";
@@ -262,9 +268,12 @@ async function add_songs(playlist_id, song_uris, access_token) {
 }
 
 function display_result(playlist_url) {
+  document.getElementById("info").style.display = "none";
   document.getElementById("login").style.display = "none";
   document.getElementById("username").style.display = "none";
   document.getElementById("input").style.display = "none";
+  document.getElementById("sentence").value = "";
+  document.getElementById("playlist-title").value = "";
   let html_playlist = document.getElementById("playlist-url");
   html_playlist.innerHTML = `Playlist Generated: <a style="color:white;" target="_blank" href="${playlist_url}"> Click here</a>`;
   html_playlist.href = `${playlist_url}`;
@@ -280,6 +289,8 @@ async function main() {
   let access_token = await window.localStorage.getItem("access_token");
   let words = get_data(document.getElementById("sentence").value);
   let title = document.getElementById("playlist-title").value;
+
+  // Greedy Algorithm :
   let song_uris = await get_song_uris(access_token, words);
   if (song_uris === false) {
     return "Invalid sentence";

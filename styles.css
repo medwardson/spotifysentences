@@ -2,6 +2,11 @@
   margin: 0% 20% 0% 20%;
   padding: 100px;
   background-color: #1db954;
+  text-align: center;
+}
+
+#info {
+  padding-top: 5%;
 }
 
 #sentence {
