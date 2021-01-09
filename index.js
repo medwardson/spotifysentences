@@ -4,8 +4,8 @@ String -> List of String
 
 */
 
-// ENVIRONMENT OPTIONS
-let ENV__GHPAGES = encodeURI("https://medwardson.github.io/SpotifySentences/");
+
+let ENV__GHPAGES = encodeURI("https://medwardson.github.io/spotifysentences/");
 let ENV__LOCALHOST = encodeURI("http://localhost:8000/");
 
 // CURRENT ENV (changeable)
