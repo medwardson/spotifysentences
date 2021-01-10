@@ -1,6 +1,5 @@
 #main {
   margin: 0% 20% 0% 20%;
-  padding: 100px;
   background-color: #1db954;
   text-align: center;
 }
@@ -78,5 +77,39 @@ h2 {
   }
   100% {
     transform: rotate(360deg);
+  }
+}
+
+@media only screen and (max-width: 780px) {
+  #sentence {
+    width: 73vw;
+    height: 10vh;
+    margin: auto;
+    margin-bottom: 5%;
+  }
+
+  #playlist-title {
+    margin: auto;
+  }
+
+  #main {
+    margin: auto;
+    padding-top: 5%;
+    padding-bottom: 5%;
+    width: 100vw;
+  }
+
+  #submitBox {
+    flex-direction: column;
+  }
+
+  #submit {
+    width: 20vw;
+    margin: auto;
+  }
+
+  #info {
+    padding-left: 5%;
+    padding-right: 5%;
   }
 }
