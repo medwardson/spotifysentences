@@ -122,44 +122,6 @@ async function search_song(access_token, songname) {
 }
 
 /*
-get_longest_title(words, access_token, max_len) loops through the list of words to find the longest song title
-possible up to max len, and proceeds to return the uri as well as the index of the item both inside an array.
-
-[listof String], Token, Natural Num -> anyof false, [Natural Num, Track Uri (Str)]
-
-*/
-
-async function get_longest_title(words, access_token, max_len) {
-  var longest_index = 0;
-  var counter = 0;
-  var longest_uri = "";
-  while (counter < max_len) {
-    query = "";
-    for (i = 0; i <= counter; i++) {
-      if (i == 0) {
-        query += words[i];
-      } else {
-        query += " " + words[i];
-      }
-    }
-    song_data = await search_song(access_token, query);
-    if (song_data == false) {
-      counter++;
-      continue;
-    }
-    if (song_data[0].toLowerCase() == query.toLowerCase()) {
-      longest_index = counter;
-      longest_uri = song_data[1];
-    }
-    counter++;
-  }
-  if (longest_uri === "") {
-    return false;
-  }
-  return [longest_index, longest_uri];
-}
-
-/*
 get_song_index(songname, token) finds the first index occurence up to the 50th search value 
 for which we get an exact word match as the title, and returns the index.
 
@@ -191,31 +153,6 @@ async function get_song_index(songname, token) {
       }
       return false;
     });
-}
-
-/*
-get_song_uris(access_token, words) takes the access token for calls to the api and the list of words and cycles through get_longest_title()
-to get the uri's and store them in song_uris, then returns an array of the uri's.
-
-Token [Str] -> [Song Uris]
-*/
-
-async function get_song_uris(access_token, words) {
-  let song_uris = [];
-  while (words.length != 0) {
-    next_song = await get_longest_title(
-      words,
-      access_token,
-      Math.min(words.length, 7)
-    );
-    if (next_song === false) {
-      alert("You have chosen an invalid sentence.");
-      return false;
-    }
-    song_uris.push(next_song[1]);
-    words = words.splice(next_song[0] + 1, words.length);
-  }
-  return song_uris;
 }
 
 /**
@@ -252,7 +189,6 @@ async function make_playlist(access_token, title) {
  */
 
 async function add_songs(playlist_id, song_uris, access_token) {
-  console.log(playlist_id);
   fetch(`https://api.spotify.com/v1/playlists/${playlist_id}/tracks`, {
     method: "POST",
     headers: {
@@ -288,10 +224,9 @@ async function main() {
   let access_token = await window.localStorage.getItem("access_token");
   let words = get_data(document.getElementById("sentence").value);
   let title = document.getElementById("playlist-title").value;
-
-  // Greedy Algorithm :
+  get_song_uris(access_token, words);
   let song_uris = await get_song_uris(access_token, words);
-  if (song_uris === false) {
+  if (song_uris === []) {
     return "Invalid sentence";
   }
   playlist = await make_playlist(access_token, title);
@@ -299,4 +234,27 @@ async function main() {
   playlist_url = playlist[1];
   await add_songs(playlist_id, song_uris, access_token);
   display_result(playlist_url);
+}
+
+async function get_song_uris(access_token, words) {
+  let song_uris = [];
+  for (let i = 0; i < words.length; i++) {
+    // for (word of words) {
+    // let i = words.findIndex((query) => query === word);
+    for (let j = i; j >= 0; j--) {
+      let query = words.slice(j, i + 1).join(" ");
+      let song_data = await search_song(access_token, query);
+      console.log(song_uris);
+      console.log(query, song_data[0], song_data[1]);
+      if (song_data === false) {
+        song_uris[i] = [];
+      } else if (j === 0) {
+        song_uris[0] = [song_data[1]];
+      } else if (song_uris[j - 1].length !== 0) {
+        song_uris[i] = [...song_uris[j - 1], song_data[1]];
+        break;
+      }
+    }
+  }
+  return song_uris.pop();
 }
