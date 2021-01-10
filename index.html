@@ -27,9 +27,10 @@
       <button id="reset" onclick="login_check()" class="btn btn-dark">
         Make another Playlist
       </button>
-      <div id="input">
+      <form onsubmit="event.preventDefault(); main();" id="input">
         <textarea
           class="input-group-text"
+          required
           type="text"
           id="sentence"
           placeholder="Sentence to convert...."
@@ -40,11 +41,11 @@
             type="text"
             id="playlist-title"
             placeholder="Playlist Title"
+            required
           /><br />
-          <button onclick="main()" class="btn btn-dark">Submit</button>
-          <div class="loader"></div>
+          <button type="submit" class="btn btn-dark">Submit</button>
         </div>
-      </div>
+      </form>
     </div>
   </body>
 </html>

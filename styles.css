@@ -51,6 +51,7 @@ h2 {
 #submitBox {
   display: flex;
   justify-content: space-between;
+  height: 40px;
 }
 
 #input .input-group-text {

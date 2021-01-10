@@ -216,26 +216,6 @@ function display_result(playlist_url) {
   document.getElementById("reset").style.display = "block";
 }
 
-/*
-Main is the function run upon clicking the submit button.
-*/
-
-async function main() {
-  let access_token = await window.localStorage.getItem("access_token");
-  let words = get_data(document.getElementById("sentence").value);
-  let title = document.getElementById("playlist-title").value;
-  get_song_uris(access_token, words);
-  let song_uris = await get_song_uris(access_token, words);
-  if (song_uris === []) {
-    return "Invalid sentence";
-  }
-  playlist = await make_playlist(access_token, title);
-  playlist_id = playlist[0];
-  playlist_url = playlist[1];
-  await add_songs(playlist_id, song_uris, access_token);
-  display_result(playlist_url);
-}
-
 async function get_song_uris(access_token, words) {
   let song_uris = [];
   for (let i = 0; i < words.length; i++) {
@@ -249,7 +229,7 @@ async function get_song_uris(access_token, words) {
       if (song_data === false) {
         song_uris[i] = [];
       } else if (j === 0) {
-        song_uris[0] = [song_data[1]];
+        song_uris[i] = [song_data[1]];
       } else if (song_uris[j - 1].length !== 0) {
         song_uris[i] = [...song_uris[j - 1], song_data[1]];
         break;
@@ -257,4 +237,29 @@ async function get_song_uris(access_token, words) {
     }
   }
   return song_uris.pop();
+}
+
+/*
+Main is the function run upon clicking the submit button.
+*/
+
+async function main() {
+  let access_token = await window.localStorage.getItem("access_token");
+  let words = get_data(document.getElementById("sentence").value);
+  let title = document.getElementById("playlist-title").value;
+  let data = await search_song(access_token, "i'm a thug");
+  console.log(data);
+  get_song_uris(access_token, words);
+  let song_uris = await get_song_uris(access_token, words);
+  console.log(song_uris);
+  if (song_uris.length === 0) {
+    alert("Invalid Sentence");
+    return false;
+  }
+  playlist = await make_playlist(access_token, title);
+  playlist_id = playlist[0];
+  playlist_url = playlist[1];
+  await add_songs(playlist_id, song_uris, access_token);
+  display_result(playlist_url);
+  return false;
 }
