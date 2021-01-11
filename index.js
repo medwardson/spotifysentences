@@ -9,7 +9,7 @@ let ENV__LOCALHOST = encodeURI("http://localhost:8000/");
 let ENV__MOBILE = encodeURI("http://192.168.0.67:8000/");
 
 // CURRENT ENV (changeable)
-let ENV = ENV__GHPAGES;
+let ENV = ENV__LOCALHOST;
 
 function get_data(sentence) {
   return sentence
@@ -40,15 +40,15 @@ function login_check() {
   // get the code if it exists
   // if it doesn't exist, only show the login button.
   if (access_token == null) {
+    document.getElementById("reset").style.display = "none";
+    document.getElementById("username").style.display = "none";
+    document.getElementById("input").style.display = "none";
+    document.getElementById("playlist-url").style.display = "none";
     document.getElementById("myProgress").style.display = "none";
     document.getElementById("info").style.display = "block";
     document.getElementById("info").innerHTML =
       "Welcome to SpotifySentences, please login to continue.";
     document.getElementById("login").style.display = "block";
-    document.getElementById("reset").style.display = "none";
-    document.getElementById("username").style.display = "none";
-    document.getElementById("input").style.display = "none";
-    document.getElementById("playlist-url").style.display = "none";
   } else {
     login(access_token);
   }
@@ -71,14 +71,14 @@ function login(access_token) {
     .then((data) => {
       window.localStorage.setItem("user_id", data.id);
       document.getElementById("myProgress").style.display = "none";
-      document.getElementById("info").style.display = "block";
-      document.getElementById("info").innerHTML =
-        "SpotifySentences will convert the sentence you enter below into a playlist who's song names spell out the sentence. Please fill out the information below.";
       document.getElementById("reset").style.display = "none";
       document.getElementById("playlist-url").style.display = "none";
       document.getElementById("login").style.display = "none";
       document.getElementById("username").style.display = "block";
       document.getElementById("input").style.display = "block";
+      document.getElementById("info").style.display = "block";
+      document.getElementById("info").innerHTML =
+        "SpotifySentences will convert the sentence you enter below into a playlist who's song names spell out the sentence. Please fill out the information below.";
       document.getElementById(
         "username"
       ).innerHTML = `Logged in: ${data.display_name}`;
@@ -255,13 +255,13 @@ async function get_song_uris(access_token, words) {
 }
 
 function progress() {
-  document.getElementById("myProgress").style.display = "block";
   document.getElementById("info").style.display = "none";
   document.getElementById("reset").style.display = "none";
   document.getElementById("playlist-url").style.display = "none";
   document.getElementById("login").style.display = "none";
   document.getElementById("username").style.display = "none";
   document.getElementById("input").style.display = "none";
+  document.getElementById("myProgress").style.display = "block";
 }
 
 function invalid_query() {
