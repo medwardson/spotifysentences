@@ -235,8 +235,6 @@ async function get_song_uris(access_token, words) {
     for (let j = i; j >= 0; j--) {
       let query = words.slice(j, i + 1).join(" ");
       let song_data = await search_song(access_token, query);
-      console.log(song_uris);
-      console.log(query, song_data[0], song_data[1]);
       if (song_data === false) {
         song_uris[i] = [];
       } else if (j === 0) {
@@ -288,7 +286,6 @@ async function main() {
   let title = document.getElementById("playlist-title").value;
   get_song_uris(access_token, words);
   let song_uris = await get_song_uris(access_token, words);
-  console.log(song_uris);
   if (song_uris.length === 0) {
     invalid_query();
     return false;
