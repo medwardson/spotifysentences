@@ -81,7 +81,7 @@ function login(access_token) {
       document.getElementById("input").style.display = "block";
       document.getElementById("info").style.display = "block";
       document.getElementById("info").innerHTML =
-        "SpotifySentences converts the sentence you enter into a playlist that spells out the sentence.. Consider that not all words/combinations will be the name of a song on Spotify. Please fill out the information below.";
+        "SpotifySentences converts the sentence you enter into a playlist that spells out the sentence. Consider that not all words/combinations will be the name of a song on Spotify. Please fill out the information below.";
       document.getElementById(
         "username"
       ).innerHTML = `Logged in: ${data.display_name}`;
@@ -93,7 +93,7 @@ spotify_login() redirects the user to the spotify login portal.
 */
 
 function spotify_login() {
-  window.location = `https://accounts.spotify.com/en/authorize?client_id=d814e2c0db1c41ec848479f3876900c4&redirect_uri=${ENV}&response_type=token&scope=playlist-modify-public`;
+  window.location = `https://accounts.spotify.com/en/authorize?client_id=d814e2c0db1c41ec848479f3876900c4&redirect_uri=${ENV}&response_type=token&scope=playlist-modify-public&show_dialog=true`;
 }
 
 /*
