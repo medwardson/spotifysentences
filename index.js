@@ -74,6 +74,9 @@ function login(access_token) {
       document.getElementById("reset").style.display = "none";
       document.getElementById("playlist-url").style.display = "none";
       document.getElementById("login").style.display = "none";
+      var elem = document.getElementById("myBar");
+      elem.style.width = "0%";
+      elem.innerHTML = "";
       document.getElementById("username").style.display = "block";
       document.getElementById("input").style.display = "block";
       document.getElementById("info").style.display = "block";
@@ -265,6 +268,9 @@ function progress() {
 }
 
 function invalid_query() {
+  var elem = document.getElementById("myBar");
+  elem.style.width = "0%";
+  elem.innerHTML = "";
   document.getElementById("sentence").value = "";
   document.getElementById("playlist-title").value = "";
   login_check();
