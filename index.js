@@ -269,8 +269,6 @@ function invalid_query() {
   var elem = document.getElementById("myBar");
   elem.style.width = "0%";
   elem.innerHTML = "";
-  document.getElementById("sentence").value = "";
-  document.getElementById("playlist-title").value = "";
   login_check();
   alert("Invalid Sentence");
 }
