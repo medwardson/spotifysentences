@@ -81,7 +81,7 @@ function login(access_token) {
       document.getElementById("input").style.display = "block";
       document.getElementById("info").style.display = "block";
       document.getElementById("info").innerHTML =
-        "SpotifySentences will convert the sentence you enter below into a playlist who's song names spell out the sentence. It is important to consider that not all words/combinations will be the name of a song on spotify. Please fill out the information below.";
+        "SpotifySentences will convert the sentence you enter below into a playlist who's song names spell out the sentence. It is important to consider that not all words/combinations will be the name of a song on Spotify. Please fill out the information below.";
       document.getElementById(
         "username"
       ).innerHTML = `Logged in: ${data.display_name}`;
