@@ -40,6 +40,7 @@ function login_check() {
   // get the code if it exists
   // if it doesn't exist, only show the login button.
   if (access_token == null) {
+    document.getElementById("myProgress").style.display = "none";
     document.getElementById("info").style.display = "block";
     document.getElementById("info").innerHTML =
       "Welcome to SpotifySentences, please login to continue.";
@@ -69,6 +70,7 @@ function login(access_token) {
     .then((res) => res.json())
     .then((data) => {
       window.localStorage.setItem("user_id", data.id);
+      document.getElementById("myProgress").style.display = "none";
       document.getElementById("info").style.display = "block";
       document.getElementById("info").innerHTML =
         "SpotifySentences will convert the sentence you enter below into a playlist who's song names spell out the sentence. Please fill out the information below.";
@@ -204,6 +206,7 @@ async function add_songs(playlist_id, song_uris, access_token) {
 }
 
 function display_result(playlist_url) {
+  document.getElementById("myProgress").style.display = "none";
   document.getElementById("info").style.display = "none";
   document.getElementById("login").style.display = "none";
   document.getElementById("username").style.display = "none";
@@ -219,6 +222,10 @@ function display_result(playlist_url) {
 
 async function get_song_uris(access_token, words) {
   let song_uris = [];
+  var elem = document.getElementById("myBar");
+  var width = 1;
+  let progress = 0;
+
   for (let i = 0; i < words.length; i++) {
     // for (word of words) {
     // let i = words.findIndex((query) => query === word);
@@ -236,8 +243,32 @@ async function get_song_uris(access_token, words) {
         break;
       }
     }
+    if (width >= 100) {
+      progress = 0;
+    } else {
+      width += 100 / words.length;
+      elem.style.width = width + "%";
+      elem.innerHTML = Math.round(Math.min(100, width)) + "%";
+    }
   }
   return song_uris.pop();
+}
+
+function progress() {
+  document.getElementById("myProgress").style.display = "block";
+  document.getElementById("info").style.display = "none";
+  document.getElementById("reset").style.display = "none";
+  document.getElementById("playlist-url").style.display = "none";
+  document.getElementById("login").style.display = "none";
+  document.getElementById("username").style.display = "none";
+  document.getElementById("input").style.display = "none";
+}
+
+function invalid_query() {
+  document.getElementById("sentence").value = "";
+  document.getElementById("playlist-title").value = "";
+  login_check();
+  alert("Invalid Sentence");
 }
 
 /*
@@ -245,16 +276,15 @@ Main is the function run upon clicking the submit button.
 */
 
 async function main() {
+  progress();
   let access_token = await window.localStorage.getItem("access_token");
   let words = get_data(document.getElementById("sentence").value);
   let title = document.getElementById("playlist-title").value;
-  let data = await search_song(access_token, "i'm a thug");
-  console.log(data);
   get_song_uris(access_token, words);
   let song_uris = await get_song_uris(access_token, words);
   console.log(song_uris);
   if (song_uris.length === 0) {
-    alert("Invalid Sentence");
+    invalid_query();
     return false;
   }
   playlist = await make_playlist(access_token, title);
