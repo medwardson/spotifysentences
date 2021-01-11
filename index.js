@@ -9,7 +9,7 @@ let ENV__LOCALHOST = encodeURI("http://localhost:8000/");
 let ENV__MOBILE = encodeURI("http://192.168.0.67:8000/");
 
 // CURRENT ENV (changeable)
-let ENV = ENV__LOCALHOST;
+let ENV = ENV__GHPAGES;
 
 function get_data(sentence) {
   return sentence
