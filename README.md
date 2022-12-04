@@ -1,5 +1,5 @@
 # SpotifySentences
-medwardson.ca/spotifysentences
+http://medwardson.ca/spotifysentences
 
 Creates a playlist that spells out the desired sentence.
 
