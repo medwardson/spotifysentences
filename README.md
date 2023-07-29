@@ -1,3 +1,8 @@
+# Deprecated
+Check out the new and improved version here:
+https://spotify-sentences.medwardson.ca/
+https://github.com/medwardson/spotifysentencesv2
+
 # SpotifySentences
 http://medwardson.ca/spotifysentences
 
